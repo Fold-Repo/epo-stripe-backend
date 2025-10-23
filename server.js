@@ -29,9 +29,9 @@ function logInfo(message) {
 }
 
 function validateApiKey() {
-  if (!stripe || !stripe._apiKey)
+  if (!stripe || !stripe.StripeResource.STRIPE_SECRET_KEY)
     return "Error: you provided an empty secret key. Please provide your test mode secret key.";
-  const key = stripe._apiKey;
+  const key = stripe.StripeResource.STRIPE_SECRET_KEY;
   if (key.startsWith("pk_"))
     return "Error: you used a publishable key. Use your test secret key.";
   if (key.startsWith("sk_live"))
@@ -50,8 +50,8 @@ app.get("/test", (req, res) => {
 
 
 app.post("/register_reader", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const reader = await stripe.terminal.readers.create({
       registration_code: req.body.registration_code,
@@ -66,8 +66,8 @@ app.post("/register_reader", async (req, res) => {
 });
 
 app.post("/connection_token", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const token = await stripe.terminal.connectionTokens.create();
     res.status(200).json({ secret: token.secret });
@@ -77,8 +77,8 @@ app.post("/connection_token", async (req, res) => {
 });
 
 app.post("/create_payment_intent", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       payment_method_types: req.body.payment_method_types || ["card_present"],
@@ -130,8 +130,8 @@ app.post("/cancel_payment_intent", async (req, res) => {
 });
 
 app.post("/create_setup_intent", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const params = {
       payment_method_types: req.body.payment_method_types || ["card_present"],
@@ -189,8 +189,8 @@ app.post("/update_payment_intent", async (req, res) => {
 });
 
 app.get("/list_locations", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const locations = await stripe.terminal.locations.list({ limit: 100 });
     logInfo(`${locations.data.length} Locations fetched`);
@@ -201,8 +201,8 @@ app.get("/list_locations", async (req, res) => {
 });
 
 app.post("/create_location", async (req, res) => {
-  const validationError = validateApiKey();
-  if (validationError) return res.status(400).send(logInfo(validationError));
+  // const validationError = validateApiKey();
+  // if (validationError) return res.status(400).send(logInfo(validationError));
   try {
     const location = await stripe.terminal.locations.create({
       display_name: req.body.display_name,
