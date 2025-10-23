@@ -9,5 +9,3 @@ services:
     envVars:
       - key: STRIPE_TEST_SECRET_KEY
         sync: false   # Add your Stripe test secret key in Render dashboard
-      - key: STRIPE_ENV
-        value: test
