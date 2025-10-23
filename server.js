@@ -43,6 +43,12 @@ app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "index.html"));
 });
 
+
+app.get("/test", (req, res) => {
+  res.status(200).json({data: "hello worlds"});
+});
+
+
 app.post("/register_reader", async (req, res) => {
   const validationError = validateApiKey();
   if (validationError) return res.status(400).send(logInfo(validationError));
