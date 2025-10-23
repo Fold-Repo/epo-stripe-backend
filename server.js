@@ -78,7 +78,7 @@ app.post("/create_payment_intent", async (req, res) => {
       payment_method_types: req.body.payment_method_types || ["card_present"],
       capture_method: req.body.capture_method || "manual",
       amount: req.body.amount,
-      currency: req.body.currency || "usd",
+      currency: req.body.currency || "gbp",
       description: req.body.description || "Example PaymentIntent",
       payment_method_options: req.body.payment_method_options || {},
       receipt_email: req.body.receipt_email,
